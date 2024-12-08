@@ -1,8 +1,9 @@
 mod day_one;
+mod day_three;
+mod day_two;
 mod error;
 mod io;
 
-use crate::day_one::main as main_one;
 use crate::error::PuzzleError;
 use clap::Parser;
 use std::collections::HashMap;
@@ -22,7 +23,11 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    let functions = HashMap::from([(1, main_one)]);
+    let functions = HashMap::from([
+        (1, day_one::main as fn(String) -> Result<(), PuzzleError>),
+        (2, day_two::main as fn(String) -> Result<(), PuzzleError>),
+        (3, day_three::main as fn(String) -> Result<(), PuzzleError>),
+    ]);
 
     let result = match functions.get(&args.puzzle_num) {
         Some(function) => function(args.file_path),
